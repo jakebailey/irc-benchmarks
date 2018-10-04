@@ -27,44 +27,44 @@ func BenchmarkParseEscaping(b *testing.B) {
 }
 
 func runParserBenchmarks(b *testing.B, raw string) {
-	b.Run("github.com/jakebailey/irc", func(b *testing.B) {
+	b.Run("jakebailey/irc", func(b *testing.B) {
 		var m irc.Message
 		for i := 0; i < b.N; i++ {
 			m.Parse(raw) //nolint:errcheck
 		}
 	})
 
-	b.Run("github.com/jakebailey/ircold", func(b *testing.B) {
+	b.Run("jakebailey/ircold", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			jbirc.ParseMessage(raw)
 		}
 	})
 
-	b.Run("github.com/fluffle/goirc/client", func(b *testing.B) {
+	b.Run("fluffle/goirc/client", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			fluffle.ParseLine(raw)
 		}
 	})
 
-	b.Run("github.com/sorcix/irc", func(b *testing.B) {
+	b.Run("sorcix/irc", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			sorcix.ParseMessage(raw)
 		}
 	})
 
-	b.Run("github.com/thoj/go-ircevent", func(b *testing.B) {
+	b.Run("thoj/go-ircevent", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			ircEventParseToEvent(raw) //nolint:errcheck
 		}
 	})
 
-	b.Run("github.com/goshuirc/irc-go/ircmsg", func(b *testing.B) {
+	b.Run("goshuirc/irc-go/ircmsg", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			ircmsg.ParseLine(raw)
 		}
 	})
 
-	b.Run("github.com/gempir/go-twitch-irc", func(b *testing.B) {
+	b.Run("gempir/go-twitch-irc", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			twitch.ParseMessage(raw)
 		}

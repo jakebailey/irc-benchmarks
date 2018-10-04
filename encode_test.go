@@ -26,7 +26,7 @@ func BenchmarkEncodeEscaping(b *testing.B) {
 }
 
 func runEncoderBenchmarks(b *testing.B, raw string) {
-	b.Run("github.com/jakebailey/irc", func(b *testing.B) {
+	b.Run("jakebailey/irc", func(b *testing.B) {
 		var m irc.Message
 		m.Parse(raw) //nolint:errcheck
 
@@ -36,7 +36,7 @@ func runEncoderBenchmarks(b *testing.B, raw string) {
 		}
 	})
 
-	b.Run("github.com/jakebailey/irc WriteTo", func(b *testing.B) {
+	b.Run("jakebailey/irc WriteTo", func(b *testing.B) {
 		var m irc.Message
 		m.Parse(raw) //nolint:errcheck
 
@@ -46,7 +46,7 @@ func runEncoderBenchmarks(b *testing.B, raw string) {
 		}
 	})
 
-	b.Run("github.com/jakebailey/ircold", func(b *testing.B) {
+	b.Run("jakebailey/ircold", func(b *testing.B) {
 		m := jbirc.ParseMessage(raw)
 
 		b.ResetTimer()
@@ -55,11 +55,11 @@ func runEncoderBenchmarks(b *testing.B, raw string) {
 		}
 	})
 
-	b.Run("github.com/fluffle/goirc/client", func(b *testing.B) {
+	b.Run("fluffle/goirc/client", func(b *testing.B) {
 		b.Skip("does not support message reencoding")
 	})
 
-	b.Run("github.com/sorcix/irc", func(b *testing.B) {
+	b.Run("sorcix/irc", func(b *testing.B) {
 		m := sorcix.ParseMessage(raw)
 
 		b.ResetTimer()
@@ -68,11 +68,11 @@ func runEncoderBenchmarks(b *testing.B, raw string) {
 		}
 	})
 
-	b.Run("github.com/thoj/go-ircevent", func(b *testing.B) {
+	b.Run("thoj/go-ircevent", func(b *testing.B) {
 		b.Skip("does not support message reencoding")
 	})
 
-	b.Run("github.com/goshuirc/irc-go/ircmsg", func(b *testing.B) {
+	b.Run("goshuirc/irc-go/ircmsg", func(b *testing.B) {
 		m, _ := ircmsg.ParseLine(raw)
 
 		b.ResetTimer()
@@ -81,7 +81,7 @@ func runEncoderBenchmarks(b *testing.B, raw string) {
 		}
 	})
 
-	b.Run("github.com/gemir/go-twitch-irc", func(b *testing.B) {
+	b.Run("gemir/go-twitch-irc", func(b *testing.B) {
 		b.Skip("does not support message reencoding")
 	})
 }
