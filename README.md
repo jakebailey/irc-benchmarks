@@ -13,7 +13,7 @@ rather than creating a temporary buffer.
 actually export the message parsing function, so `go-forceexport` was used
 to find a function pointer rather than fork the project.
 - `github.com/goshuirc/irc-go/ircmsg`, an IRC message handler lib.
-- `github.com/gemir/go-twitch-irc`, an IRC lib specifically for Twitch. This
+- `github.com/gempir/go-twitch-irc`, an IRC lib specifically for Twitch. This
 comparison is likely unfair because it includes extra functionailty around
 extracting tags.
 
