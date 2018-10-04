@@ -63,7 +63,8 @@ BenchmarkEncodeEscaping/github.com/sorcix/irc-4                 500000    2936.0
 BenchmarkEncodeEscaping/github.com/goshuirc/irc-go/ircmsg-4     300000    4013.00 ns/op     1656 B/op     8 allocs/op
 ```
 
-`github.com/fluffle/goirc/client` and `github.com/thoj/go-ircevent` are omitted from the encoding tests,
+`github.com/fluffle/goirc/client`, `github.com/thoj/go-ircevent` and `github.com/gemir/go-twitch-irc`
+are omitted from the encoding tests,
 as they do not support encoding of their message types, only sending strings (with or without helpers
 for common commands).
 
