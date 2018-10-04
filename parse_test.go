@@ -4,6 +4,8 @@ import (
 	"testing"
 
 	fluffle "github.com/fluffle/goirc/client"
+	twitch "github.com/gempir/go-twitch-irc"
+	"github.com/goshuirc/irc-go/ircmsg"
 	"github.com/jakebailey/irc"
 	jbirc "github.com/jakebailey/ircold"
 	sorcix "github.com/sorcix/irc"
@@ -53,6 +55,18 @@ func runParserBenchmarks(b *testing.B, raw string) {
 	b.Run("github.com/thoj/go-ircevent", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			ircEventParseToEvent(raw) //nolint:errcheck
+		}
+	})
+
+	b.Run("github.com/goshuirc/irc-go/ircmsg", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			ircmsg.ParseLine(raw)
+		}
+	})
+
+	b.Run("github.com/gempir/go-twitch-irc", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			twitch.ParseMessage(raw)
 		}
 	})
 }

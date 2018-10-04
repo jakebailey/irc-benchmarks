@@ -12,7 +12,7 @@ func init() {
 	// prevent dead code elimination of parseToEvent
 	ircevent.IRC("foo", "bar").Connect("") //nolint:errcheck
 
-	if err := forceexport.GetFunc(&ircEventParseToEvent, "github.com/jakebailey/irc-benchmark/vendor/github.com/thoj/go-ircevent.parseToEvent"); err != nil {
+	if err := forceexport.GetFunc(&ircEventParseToEvent, "github.com/jakebailey/irc-benchmarks/vendor/github.com/thoj/go-ircevent.parseToEvent"); err != nil {
 		panic(err)
 	}
 }

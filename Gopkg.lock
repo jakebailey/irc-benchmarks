@@ -14,12 +14,28 @@
   revision = "08c1bcf17445781669bcecc47159c627962e18f1"
 
 [[projects]]
+  branch = "master"
+  digest = "1:342fa6da703b43969b62c5d964ae5622ba35dd8ebb6b31a59a6a7cfa8a13d12e"
+  name = "github.com/gempir/go-twitch-irc"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "65648fd516245773c33d2a1c8f0251a81a0baf10"
+
+[[projects]]
   digest = "1:bc38c7c481812e178d85160472e231c5e1c9a7f5845d67e23ee4e706933c10d8"
   name = "github.com/golang/mock"
   packages = ["gomock"]
   pruneopts = "NUT"
   revision = "c34cdb4725f4c3844d095133c6e40e448b86589b"
   version = "v1.1.1"
+
+[[projects]]
+  branch = "master"
+  digest = "1:9ab15495704fb3cd7f857071a09379c5829e15ce0a9d641af089d646a0f9b663"
+  name = "github.com/goshuirc/irc-go"
+  packages = ["ircmsg"]
+  pruneopts = "NUT"
+  revision = "8d136c4f92871c1c132bf702022363add479291b"
 
 [[projects]]
   branch = "master"
@@ -78,6 +94,8 @@
   analyzer-version = 1
   input-imports = [
     "github.com/fluffle/goirc/client",
+    "github.com/gempir/go-twitch-irc",
+    "github.com/goshuirc/irc-go/ircmsg",
     "github.com/jakebailey/irc",
     "github.com/jakebailey/ircold",
     "github.com/linux4life798/go-forceexport",

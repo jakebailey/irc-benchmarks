@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"testing"
 
+	"github.com/goshuirc/irc-go/ircmsg"
 	"github.com/jakebailey/irc"
 	jbirc "github.com/jakebailey/ircold"
 	sorcix "github.com/sorcix/irc"
@@ -68,6 +69,19 @@ func runEncoderBenchmarks(b *testing.B, raw string) {
 	})
 
 	b.Run("github.com/thoj/go-ircevent", func(b *testing.B) {
+		b.Skip("does not support message reencoding")
+	})
+
+	b.Run("github.com/goshuirc/irc-go/ircmsg", func(b *testing.B) {
+		m, _ := ircmsg.ParseLine(raw)
+
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			m.LineBytes() //nolint:errcheck
+		}
+	})
+
+	b.Run("github.com/gemir/go-twitch-irc", func(b *testing.B) {
 		b.Skip("does not support message reencoding")
 	})
 }

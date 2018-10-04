@@ -48,6 +48,14 @@
   name = "github.com/linux4life798/go-forceexport"
   branch = "update-to-go1.10"
 
+[[constraint]]
+  name = "github.com/goshuirc/irc-go"
+  branch = "master"
+
+[[constraint]]
+  name = "github.com/gempir/go-twitch-irc"
+  branch = "master"
+
 [prune]
   non-go = true
   go-tests = true
