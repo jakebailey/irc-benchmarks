@@ -73,11 +73,11 @@ func runEncoderBenchmarks(b *testing.B, raw string) {
 	})
 
 	b.Run("goshuirc/irc-go/ircmsg", func(b *testing.B) {
-		m, _ := ircmsg.ParseLine(raw)
+		m, _ := ircmsg.ParseLineStrict(raw, false, 0)
 
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
-			m.LineBytes() //nolint:errcheck
+			m.LineBytesStrict(false, 0) //nolint:errcheck
 		}
 	})
 

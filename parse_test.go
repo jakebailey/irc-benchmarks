@@ -60,7 +60,7 @@ func runParserBenchmarks(b *testing.B, raw string) {
 
 	b.Run("goshuirc/irc-go/ircmsg", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
-			ircmsg.ParseLine(raw)
+			ircmsg.ParseLineStrict(raw, false, 0)
 		}
 	})
 
