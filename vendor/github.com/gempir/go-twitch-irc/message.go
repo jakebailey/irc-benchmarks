@@ -11,6 +11,8 @@ import (
 type MessageType int
 
 const (
+	// UNSET is the default message type, for whenever a new message type is added by twitch that we don't parse yet
+	UNSET MessageType = -1
 	// WHISPER private messages
 	WHISPER MessageType = 0
 	// PRIVMSG standard chat message
@@ -23,13 +25,16 @@ const (
 	USERNOTICE MessageType = 4
 	// USERSTATE messages
 	USERSTATE MessageType = 5
+	// NOTICE messages like sub mode, host on
+	NOTICE MessageType = 6
 )
 
 type message struct {
 	Type        MessageType
 	Time        time.Time
 	Channel     string
-	UserID      int64
+	ChannelID   string
+	UserID      string
 	Username    string
 	DisplayName string
 	UserType    string
@@ -54,6 +59,7 @@ func parseMessage(line string) *message {
 		return &message{
 			Text: line,
 			Raw:  line,
+			Type: UNSET,
 		}
 	}
 	spl := strings.SplitN(line, " :", 3)
@@ -67,14 +73,13 @@ func parseMessage(line string) *message {
 		text = text[8 : len(text)-1]
 	}
 	msg := &message{
-		Time:   time.Now(),
 		Text:   text,
 		Tags:   map[string]string{},
 		Action: action,
+		Type:   UNSET,
 	}
 	msg.Username, msg.Type, msg.Channel = parseMiddle(middle)
 	parseTags(msg, tags[1:])
-	msg.UserID, _ = strconv.ParseInt(msg.Tags["user-id"], 10, 64)
 	if msg.Type == CLEARCHAT {
 		targetUser := msg.Text
 		msg.Username = targetUser
@@ -86,20 +91,13 @@ func parseMessage(line string) *message {
 }
 
 func parseOtherMessage(line string) *message {
-	msg := &message{}
+	msg := &message{
+		Type: UNSET,
+	}
 	split := strings.Split(line, " ")
 	msg.Raw = line
 
-	switch split[2] {
-	case "ROOMSTATE":
-		msg.Type = ROOMSTATE
-	case "USERNOTICE":
-		msg.Type = USERNOTICE
-	case "CLEARCHAT":
-		msg.Type = CLEARCHAT
-	case "USERSTATE":
-		msg.Type = USERSTATE
-	}
+	msg.Type = parseMessageType(split[2])
 	msg.Tags = make(map[string]string)
 
 	// Parse out channel if it exists in this line
@@ -127,6 +125,27 @@ func parseOtherMessage(line string) *message {
 	return msg
 }
 
+func parseMessageType(messageType string) MessageType {
+	switch messageType {
+	case "PRIVMSG":
+		return PRIVMSG
+	case "WHISPER":
+		return WHISPER
+	case "CLEARCHAT":
+		return CLEARCHAT
+	case "NOTICE":
+		return NOTICE
+	case "ROOMSTATE":
+		return ROOMSTATE
+	case "USERSTATE":
+		return USERSTATE
+	case "USERNOTICE":
+		return USERNOTICE
+	default:
+		return UNSET
+	}
+}
+
 func parseMiddle(middle string) (string, MessageType, string) {
 	var username string
 	var msgType MessageType
@@ -145,14 +164,7 @@ func parseMiddle(middle string) (string, MessageType, string) {
 				start = i + 1
 			} else {
 				typ := middle[start:i]
-				switch typ {
-				case "PRIVMSG":
-					msgType = PRIVMSG
-				case "WHISPER":
-					msgType = WHISPER
-				case "CLEARCHAT":
-					msgType = CLEARCHAT
-				}
+				msgType = parseMessageType(typ)
 				middle = middle[i:]
 			}
 		}
@@ -184,9 +196,19 @@ func parseTags(msg *message, tagsRaw string) {
 			msg.Emotes = parseTwitchEmotes(value, msg.Text)
 		case "user-type":
 			msg.UserType = value
-		default:
-			msg.Tags[spl[0]] = value
+		case "tmi-sent-ts":
+			i, err := strconv.ParseInt(value, 10, 64)
+			if err == nil {
+				msg.Time = time.Unix(0, int64(i*1e6))
+			}
+		case "room-id":
+			msg.ChannelID = value
+		case "target-user-id":
+			msg.UserID = value
+		case "user-id":
+			msg.UserID = value
 		}
+		msg.Tags[spl[0]] = value
 	}
 }
 
@@ -230,4 +252,19 @@ func parseTwitchEmotes(emoteTag, text string) []*Emote {
 		emotes = append(emotes, e)
 	}
 	return emotes
+}
+
+func parseJoinPart(text string) (string, string) {
+	username := strings.Split(text, "!")
+	channel := strings.Split(username[1], "#")
+	return strings.Trim(channel[1], " "), strings.Trim(username[0], " :")
+}
+
+func parseNames(text string) (string, []string) {
+	lines := strings.Split(text, ":")
+	channelDirty := strings.Split(lines[1], "#")
+	channel := strings.Trim(channelDirty[1], " ")
+	users := strings.Split(lines[2], " ")
+
+	return channel, users
 }

@@ -15,19 +15,19 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:342fa6da703b43969b62c5d964ae5622ba35dd8ebb6b31a59a6a7cfa8a13d12e"
+  digest = "1:8a3e27dc019eac00cc5367e2edf6c7de00cee43a72b4f299e19bb8ced428163e"
   name = "github.com/gempir/go-twitch-irc"
   packages = ["."]
   pruneopts = "NUT"
-  revision = "65648fd516245773c33d2a1c8f0251a81a0baf10"
+  revision = "3c1e8138f3f808d37cb363b7a60bdb7ece223be9"
 
 [[projects]]
-  digest = "1:bc38c7c481812e178d85160472e231c5e1c9a7f5845d67e23ee4e706933c10d8"
+  digest = "1:b60efdeb75d3c0ceed88783ac2495256aba3491a537d0f31401202579fd62a94"
   name = "github.com/golang/mock"
   packages = ["gomock"]
   pruneopts = "NUT"
-  revision = "c34cdb4725f4c3844d095133c6e40e448b86589b"
-  version = "v1.1.1"
+  revision = "51421b967af1f557f93a59e0057aaf15ca02e29c"
+  version = "v1.2.0"
 
 [[projects]]
   branch = "master"
@@ -39,11 +39,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:b69dcb607b4cd00b329533b49f922e6fe8a0fea17795b1b4f623534bc5001627"
+  digest = "1:11d6665fbc247bbba911da0bace0c6b9055233bebe8cbcd893c3ed79476bee45"
   name = "github.com/jakebailey/irc"
   packages = ["."]
   pruneopts = "NUT"
-  revision = "07966766dc51fcd7748308daa1478ddb855a3e5c"
+  revision = "67ae613c0584e15c7ca3360e7ed2bd504771e34f"
 
 [[projects]]
   branch = "master"
@@ -71,23 +71,22 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:5259cf7d461fd75cde5e2b45a7bc8c4f7f9dae284f5aeac6b20141a3833b641a"
+  digest = "1:5dd02ec37f25cca3a4ea07debba0916bd0233c22487da9e9bb61a02071c76a74"
   name = "github.com/thoj/go-ircevent"
   packages = ["."]
   pruneopts = "NUT"
-  revision = "14f3614f28c3fea160ea49194ff662c2cd2f8280"
+  revision = "dc1855cb439cb8512fb7855d3293b785be25b850"
 
 [[projects]]
   branch = "master"
-  digest = "1:7be36f3dbb6f35e6605ae69026335061089b4e9f078ecd481d546fe4564eeb17"
+  digest = "1:0a004b4ff5794b399b3556e68f0c436a57d5f7e437e740bb16c0b521ceb23fd7"
   name = "golang.org/x/net"
   packages = [
-    "context",
     "internal/socks",
     "proxy",
   ]
   pruneopts = "NUT"
-  revision = "f5e5bdd778241bfefa8627f7124c39cd6ad8d74f"
+  revision = "16b79f2e4e95ea23b2bf9903c9809ff7b013ce85"
 
 [solve-meta]
   analyzer-name = "dep"

@@ -1,18 +1,17 @@
 package irc
 
 import (
-	"errors"
 	"strings"
 )
 
 var (
 	// ErrEmptyMessage is returned when the parser encounters an empty message.
-	ErrEmptyMessage = errors.New("empty message")
+	ErrEmptyMessage = &ParseError{"empty message"}
 
 	// ErrInvalidMessage is returned when the parser encounters an invalid message.
 	// This error is likely to be replaced with a more helpful error (encoding something
 	// like where the error occurred).
-	ErrInvalidMessage = errors.New("invalid message")
+	ErrInvalidMessage = &ParseError{"invalid message"}
 )
 
 // Parse parses a string into a message. All fields of the message struct
@@ -46,7 +45,9 @@ func parseMessage(raw string, m *Message) error {
 	// Easier and no slower to just zero out the message early.
 	// It may be better to not do this selectively and have an option to
 	// do something like keeping the tags map around (to be reused).
-	*m = Message{}
+	*m = Message{
+		Raw: raw,
+	}
 
 	var err error
 
@@ -75,10 +76,7 @@ func parseMessage(raw string, m *Message) error {
 }
 
 func (m *Message) parseTags(raw string) (string, error) {
-	if raw == "" {
-		return "", ErrInvalidMessage
-	}
-
+	// raw is guaranteed to not be empty when this function is called.
 	if raw[0] != '@' {
 		return raw, nil
 	}
@@ -127,14 +125,7 @@ func (m *Message) parseTags(raw string) (string, error) {
 		k := pair[:i]
 		v := pair[i+1:]
 
-		// Check ahead of time to see if the string contains something that
-		// needs to be unescaped. This is faster and much more allocation
-		// efficient than always running the replacer.
-		if containsUnescapeable(v) {
-			v = tagUnescape.Replace(v)
-		}
-
-		m.Tags[k] = v
+		m.Tags[k] = tagUnescape(v)
 	}
 
 	return raw, nil
@@ -212,11 +203,7 @@ func (m *Message) parseParamsAndTrailing(raw string) {
 		m.ForcedTrailing = m.Trailing == ""
 	}
 
-	params := stringFields(raw, ' ')
-
-	if len(params) != 0 {
-		m.Params = params
-	}
+	m.Params = stringFields(raw, ' ')
 }
 
 func isSpace(r rune) bool {
