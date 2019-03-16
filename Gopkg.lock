@@ -19,7 +19,7 @@
   name = "github.com/gempir/go-twitch-irc"
   packages = ["."]
   pruneopts = "NUT"
-  revision = "3c1e8138f3f808d37cb363b7a60bdb7ece223be9"
+  revision = "dca1cf888322d0b7d195b1fb8ac56a70b48e9301"
 
 [[projects]]
   digest = "1:b60efdeb75d3c0ceed88783ac2495256aba3491a537d0f31401202579fd62a94"
@@ -39,11 +39,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:11d6665fbc247bbba911da0bace0c6b9055233bebe8cbcd893c3ed79476bee45"
+  digest = "1:2e4a688f46492d53a748d6b785d2bf27293494a367b04bac865aaa443e8e5aea"
   name = "github.com/jakebailey/irc"
   packages = ["."]
   pruneopts = "NUT"
-  revision = "67ae613c0584e15c7ca3360e7ed2bd504771e34f"
+  revision = "8e60d01fee2d502174c070f447851eec87b7728b"
 
 [[projects]]
   branch = "master"
@@ -86,7 +86,7 @@
     "proxy",
   ]
   pruneopts = "NUT"
-  revision = "16b79f2e4e95ea23b2bf9903c9809ff7b013ce85"
+  revision = "9f648a60d9775ef5c977e7669d1673a7a67bef33"
 
 [solve-meta]
   analyzer-name = "dep"
